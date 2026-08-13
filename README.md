@@ -19,5 +19,9 @@ streamlit run app.py
 
 ## Notes
 
-- The app expects the book's illustration files in a folder configured via `BOOK_DIR` at the top of `app.py` (currently `E:\Books\The Little Leprechaun`). The PNGs are not included in this repository.
+- The book's page illustrations are included in `images/` (`page_1.png` ...
+  `page_13.png`), so the app runs out of the box from this repo.
+- To use a different image folder, set the `LEPRECHAUN_BOOK_DIR` environment
+  variable (or `BOOK_DIR` in Streamlit secrets). The app checks, in order:
+  `LEPRECHAUN_BOOK_DIR` -> `BOOK_DIR` secret -> the local `images/` folder.
 - Per-page text and ordering live in the `PAGES` list in `app.py`.

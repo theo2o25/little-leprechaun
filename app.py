@@ -10,7 +10,23 @@ st.set_page_config(
     initial_sidebar_state="collapsed",
 )
 
-BOOK_DIR = r"E:\Books\The Little Leprechaun"
+HERE = os.path.dirname(os.path.abspath(__file__))
+
+
+def resolve_book_dir():
+    candidates = [
+        os.environ.get("LEPRECHAUN_BOOK_DIR", ""),
+        st.secrets.get("BOOK_DIR", ""),
+        os.path.join(HERE, "images"),
+        r"E:\Books\The Little Leprechaun",
+    ]
+    for c in candidates:
+        if c and os.path.isdir(c):
+            return c
+    return candidates[-1]
+
+
+BOOK_DIR = resolve_book_dir()
 
 PAGES = [
     {
@@ -359,7 +375,11 @@ def main():
     if os.path.exists(img_path):
         st.image(img_path, use_container_width=True)
     else:
-        st.error(f"Could not find {img_path}")
+        st.error(
+            f"Could not find {page['image']}. Searched in `{BOOK_DIR}`. "
+            "Set the LEPRECHAUN_BOOK_DIR env var (or BOOK_DIR in secrets) "
+            "to the folder containing the page images."
+        )
 
     mid = st.columns([1, 4, 1])
     with mid[1]:
