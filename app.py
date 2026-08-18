@@ -18,7 +18,6 @@ def resolve_book_dir():
         os.environ.get("LEPRECHAUN_BOOK_DIR", ""),
         st.secrets.get("BOOK_DIR", ""),
         os.path.join(HERE, "images"),
-        r"E:\Books\The Little Leprechaun",
     ]
     for c in candidates:
         if c and os.path.isdir(c):
@@ -233,7 +232,6 @@ def speak(text):
     html_component(
         f"""
         <script>
-            window.parent.postMessage({{type:"streamlit:speak", text:{safe}}}, "*");
             const msg = new SpeechSynthesisUtterance({safe});
             msg.rate = 0.85;
             msg.pitch = 1.05;
